@@ -20,6 +20,12 @@ CTX_AFFIXES = {
         # `<|im_end|>\n<|im_start|>assistant\n`
         "suffix": [151645, 198, 151644, 77091, 198],
     },
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct": {
+        # `<|im_start|>system\n<|im_end|>\n<|im_start|>user\n`
+        "prefix": [1, 9690, 198, 2, 198, 1, 4093, 198],
+        # `<|im_end|>\n<|im_start|>assistant\n`  ("assistant" splits into "ass"+"istant")
+        "suffix": [2, 198, 1, 520, 9531, 198],
+    },
 }
 
 

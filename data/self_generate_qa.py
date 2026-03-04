@@ -32,6 +32,7 @@ from ctx_to_lora.utils import clear_gpu
 
 STOP_STRINGS = {
     "google/gemma-2-2b-it": ["<eos>", "<end_of_turn>"],
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct": ["<|im_end|>"],
 }
 
 MODEL_CTX_LEN = {
@@ -40,6 +41,7 @@ MODEL_CTX_LEN = {
     "google/gemma-2-9b-it": 8192,
     # qwen 4b has 256k ctx length but using lower max lengths is faster
     "Qwen/Qwen3-4B-Instruct-2507": 2**13 + 2**12,
+    "HuggingFaceTB/SmolLM2-1.7B-Instruct": 8192,
 }
 
 
