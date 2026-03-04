@@ -12,10 +12,24 @@ SELF_QA_INTX = (
     "# User Input\n"
 )
 
-tokens_full = tk(SELF_QA_INTX, add_special_tokens=False)["input_ids"]
-tokens_sliced = tokens_full[1:]
+# Tokenize standalone (what the code searches for)
+standalone = tk(SELF_QA_INTX, add_special_tokens=False)["input_ids"][1:]
+print("Standalone tokens (searched for):", standalone[-10:])
+print("Standalone decoded:", repr(tk.decode(standalone[-10:])))
 
-print("Full tokens:", tokens_full[:5], "...")
-print("First token decoded:", repr(tk.decode([tokens_full[0]])))
-print("Sliced tokens (what code searches for):", tokens_sliced[:5], "...")
-print("Sliced decoded:", repr(tk.decode(tokens_sliced[:10])))
+# Now tokenize as part of a full prompt (what vLLM actually produces)
+full_prompt = "You are an honest and helpful assistant.\n\n\n# Provided Information\nSome context here.\n\n---\n\n" + SELF_QA_INTX + "What is 2+2?"
+full_tokens = tk(full_prompt, add_special_tokens=False)["input_ids"]
+print("\nFull prompt tokens around '# User Input':")
+
+# Find "User Input" in decoded tokens
+for i in range(len(full_tokens) - 5):
+    chunk = tk.decode(full_tokens[i:i+5])
+    if "User Input" in chunk:
+        print(f"  Found at index {i}: {full_tokens[i-2:i+8]}")
+        print(f"  Decoded: {repr(tk.decode(full_tokens[i-2:i+8]))}")
+        break
+
+# Compare with what code searches for
+print("\nStandalone SELF_QA_INTX tokens (last 5):", standalone[-5:])
+print("Decoded:", repr(tk.decode(standalone[-5:])))
