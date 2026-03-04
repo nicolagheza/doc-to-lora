@@ -424,6 +424,11 @@ def execute_qa_generation(
                     q_start = ii + n_self_qa_intx_tokens
                     break
 
+            if q_start is None:
+                print(f"Skipping: could not find SELF_QA_INTX tokens in prompt")
+                n_skips += 1
+                continue
+
             # bos + question + eos + start model turn + response + eos
             input_ids = all_ids[:sys_start] + all_ids[q_start:res_end]
 
