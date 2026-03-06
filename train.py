@@ -345,7 +345,7 @@ def main():
             ctx_args.max_packed_ctx_len,
             max_packed_size=-1,
             seed=training_args.seed,
-            num_proc=30,
+            num_proc=8,
         )
         logger.info("Setting per_device_train_batch_size to 1")
         training_args.per_device_train_batch_size = 1
